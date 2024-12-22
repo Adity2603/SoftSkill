@@ -1,0 +1,111 @@
+.dashboard-container {
+    background-image: url("https://source.unsplash.com/random/1920x1080");
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .dashboard-content {
+    max-width: 1200px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dashboard-header {
+    margin-bottom: 30px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+  }
+  
+  .dashboard-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .dashboard-card {
+    width: 18rem;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dashboard-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .card-header h2 {
+    margin-left: 10px;
+    font-size: 18px;
+  }
+  
+  .card-button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .card-blue {
+    background-color: #007bff;
+  }
+  
+  .card-blue .card-button {
+    background-color: #0056b3;
+  }
+  
+  .card-green {
+    background-color: #28a745;
+  }
+  
+  .card-green .card-button {
+    background-color: #218838;
+  }
+  
+  .card-yellow {
+    background-color: #ffc107;
+    color: #333;
+  }
+  
+  .card-yellow .card-button {
+    background-color: #e0a800;
+    color: #333;
+  }
+  
+  .card-cyan {
+    background-color: #17a2b8;
+  }
+  
+  .card-cyan .card-button {
+    background-color: #138496;
+  }
+  
+  .card-gray {
+    background-color: #6c757d;
+  }
+  
+  .card-gray .card-button {
+    background-color: #5a5c5d;
+  }
+  
