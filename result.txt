@@ -1,34 +1,90 @@
-"Here are four words with their meanings and example sentences (one correct and three incorrect):
+// import React, { useState } from 'react';
+import Navbar from './Navbar'; // Reuse Navbar component
+import axios from 'axios';
+
+function Vocabulary() {
+
+   
+    
+
+    const words = [];
+    const meanings = [];
+    const handleLearnNewLesson = async () => {
+        try {
+            
+            const response = await axios({
+                url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD1-QuskHLPRez-RLdpB-ePJhVMOKyWHYQ',
+                method: "post",
+                data: {
+                    "contents": [{
+                        "parts": [{ "text": `Generate 4 English words with their meanings.Do not give any introduction or any conclusion. Give words other than ${words}` }]
+                    }]
+                }
+            });
+
+            // Extract API response text
+            const wordsResponse = response.data.candidates[0].content.parts[0].text;
+            console.log(wordsResponse)
+
+            
+
+        // Split the response into lines
+        const lines = wordsResponse.trim().split('\n');
+        lines.forEach(line => {
+            const match = line.match(/^(.*?):\s+(.*)/);
+            if (match) {
+                words.push(match[1]); // Add the word to the words array
+                meanings.push(match[2]); // Add the meaning to the meanings array
+            }
+        });
+
+        console.log('Words:', words);
+        console.log('Meanings:', meanings);
+
+            // Initialize arrays for parsed data
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    
 
 
-**1.  Ephemeral:**  (adj.) Lasting for a very short time.
 
-* **Correct:** The beauty of the cherry blossoms was ephemeral, lasting only a few weeks.
-* **Incorrect:**  His ephemeral anger lasted for years. (Ephemeral implies brevity, not necessarily low intensity)
-* **Incorrect:** The ephemeral mountain range stretched for hundreds of miles. (Mountains are generally not ephemeral)
-* **Incorrect:** He made an ephemeral decision to marry her, which he later regretted.  (This sentence uses "ephemeral" incorrectly, a better choice would be "impulsive" or "hasty")
+    return (
+        <>
+            <Navbar title="Vocabulary" />
+            <div className="flex flex-col md:flex-row min-h-screen">
+                {/* First Half */}
+                <div className="w-full md:w-1/2 bg-blue-50 p-8 flex flex-col justify-center items-center">
+                    <h1 className="text-3xl font-bold mb-4">Welcome to Vocabulary Lessons</h1>
+                    <p className="text-lg text-gray-700 text-center">
+                        Improve your English vocabulary through interactive lessons powered by AI.
+                    </p>
+                </div>
 
+                {/* Second Half */}
+                <div className="w-full md:w-1/2 bg-gray-100 p-8 flex flex-col justify-center items-center ">
+                    <h2 className="text-2xl font-semibold mb-4">Click to learn Vocabluary Words</h2>
+                    <ul className="space-y-3 mb-6">
 
-**2.  Ubiquitous:** (adj.) Present, appearing, or found everywhere.
-
-* **Correct:** Smartphones have become ubiquitous in modern society.
-* **Incorrect:** The rare, endangered snow leopard is ubiquitous in the Himalayan mountains. (Ubiquitous implies commonality, not rarity)
-* **Incorrect:**  His ubiquitous sense of humour was appreciated by everyone. (The word "ubiquitous" doesn't fit with a sense of humour,  "pervasive" might be better).
-* **Incorrect:** The ubiquitous problem was solved quickly by a single person.  (A problem being ubiquitous doesn't mean it's easily solved, it means it's widespread)
-
-
-**3.  Laconic:** (adj.) Using very few words.
-
-* **Correct:**  His laconic reply was simply, "No comment."
-* **Incorrect:** He gave a laconic speech lasting for over an hour. (Laconic implies brevity, not length)
-* **Incorrect:**  Her laconic outfit included several bright colors and bold patterns. (Laconic refers to language, not clothing)
-* **Incorrect:**  The laconic scenery was breathtaking. (Laconic describes speech, not scenery)
+                        {/* PRINTS THE LESSON */}
 
 
-**4.  Obdurate:** (adj.) Stubbornly refusing to change one's opinion or course of action.
+                    </ul>
+                    <button
+                    onClick={handleLearnNewLesson}
+                        className="bg-blue-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
+                    >
+                        Learn Lesson
+                    </button>
 
-* **Correct:**  Despite the evidence, he remained obdurate in his denial.
-* **Incorrect:**  The obdurate child easily learned to ride a bike. (Obdurate implies resistance to change, not ease of learning)
-* **Incorrect:** The obdurate fabric was soft and comfortable. (Obdurate describes stubbornness, not fabric texture)
-* **Incorrect:**  She offered an obdurate solution to the problem. (Obdurate describes a person's attitude, not a solution itself)
-"
+
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default Vocabulary;
