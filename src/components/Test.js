@@ -1,49 +1,83 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
 
-export default function Test() {
-    const handleLearnNewLesson = async () => {
-        try {
-            const response = await axios({
-                url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD1-QuskHLPRez-RLdpB-ePJhVMOKyWHYQ',
-                method: "post",
-                data: {
-                    "contents": [{
-                        "parts": [{ "text": "Generate 4 English words with their meanings. Do not giv e any introduction or any conclusion" }]
-                    }]
-                }
-            });
+const Speech = () => {
+  const [text, setText] = useState('');
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
 
-            // Extract API response text
-            const wordsResponse = response.data.candidates[0].content.parts[0].text;
-            console.log(wordsResponse)
+  const startListening = () => {
+    if (!recognitionRef.current) {
+      // Initialize SpeechRecognition
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US'; // Set language
+      recognition.interimResults = true; // Get real-time results
+      recognition.continuous = true; // Keep listening until stopped
 
-            const words = [];
-        const meanings = [];
+      recognition.onstart = () => {
+        setIsListening(true);
+        setText('Listening...');
+      };
 
-        // Split the response into lines
-        const lines = wordsResponse.trim().split('\n');
-        lines.forEach(line => {
-            const match = line.match(/^(.*?):\s+(.*)/);
-            if (match) {
-                words.push(match[1]); // Add the word to the words array
-                meanings.push(match[2]); // Add the meaning to the meanings array
-            }
-        });
-
-        console.log('Words:', words);
-        console.log('Meanings:', meanings);
-
-            // Initialize arrays for parsed data
-            
-        } catch (error) {
-            console.error('Error fetching data:', error);
+      recognition.onresult = (event) => {
+        let newText = '';
+        for (let i = 0; i < event.results.length; i++) {
+          newText += event.results[i][0].transcript + ' ';
         }
-    };
+        setText(newText.trim());
+      };
 
-    return (
-        <div>
-            <button onClick={handleLearnNewLesson}>Test</button>
-        </div>
-    );
-}
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+
+    // Start speech recognition
+    recognitionRef.current.start();
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <h1 className="text-3xl font-bold mb-6">Speech to Text Converter</h1>
+      <div className="flex space-x-4">
+        <button
+          onClick={startListening}
+          disabled={isListening}
+          className={`px-6 py-2 rounded-md text-white font-semibold ${
+            isListening ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
+          }`}
+        >
+          Start
+        </button>
+        <button
+          onClick={stopListening}
+          disabled={!isListening}
+          className={`px-6 py-2 rounded-md text-white font-semibold ${
+            !isListening ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'
+          }`}
+        >
+          Stop
+        </button>
+      </div>
+      <div className="mt-6 p-4 border rounded-md shadow bg-white w-2/3 text-center text-gray-700">
+        <p className="text-xl whitespace-pre-wrap">{text || 'Your speech will appear here.'}</p>
+      </div>
+    </div>
+  );
+};
+
+export default Speech;
+

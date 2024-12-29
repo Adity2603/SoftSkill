@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Vocabluary from "./components/Vocabluary"
 import Test from "./components/Test" // Import the Dashboard component
+import Speech from "./components/Speech"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/vocabluary" element={<Vocabluary />} /> 
         <Route path="/test" element={<Test />} />{/* Add the Dashboard route */}
+        <Route path="/speech" element = {<Speech/>} />
       </Routes>
     </Router>
   );

@@ -26,7 +26,7 @@ function Dashboard() {
               <h2>Speech Lessons</h2>
             </div>
             <p>Practice and enhance your speech with guided exercises tailored to your learning needs.</p>
-            <Link to="/speech-lessons">
+            <Link to="/speech">
               <button className="card-button">Go to Speech</button>
             </Link>
           </div>
@@ -37,7 +37,7 @@ function Dashboard() {
               <h2>Pronunciation Lessons</h2>
             </div>
             <p>Master pronunciation with audio-based lessons that enhance your speaking skills.</p>
-            <Link to="/pronunciation-lessons">
+            <Link to="/">
               <button className="card-button">Go to Pronunciation</button>
             </Link>
           </div>
@@ -48,7 +48,7 @@ function Dashboard() {
               <h2>Practice Tests</h2>
             </div>
             <p>Test your skills with interactive practice tests to track your progress.</p>
-            <Link to="/practice-tests">
+            <Link to="/">
               <button className="card-button">Go to Practice Tests</button>
             </Link>
           </div>
@@ -59,7 +59,7 @@ function Dashboard() {
               <h2>Test Reports</h2>
             </div>
             <p>View detailed reports and analytics to track your performance progress.</p>
-            <Link to="/test-reports">
+            <Link to="/">
               <button className="card-button">View Test Reports</button>
             </Link>
           </div>
