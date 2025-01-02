@@ -48,7 +48,7 @@ function Dashboard() {
               <h2>Practice Tests</h2>
             </div>
             <p>Test your skills with interactive practice tests to track your progress.</p>
-            <Link to="/">
+            <Link to="/test">
               <button className="card-button">Go to Practice Tests</button>
             </Link>
           </div>

@@ -82,8 +82,8 @@ export default function Speech () {
             const speech = new SpeechSynthesisUtterance();
             speech.text = text; // Set the text to speak
             speech.lang = 'en-US'; // Set the language (default: English US)
-            speech.rate = 1; // Set the speed (1 is normal speed)
-            speech.pitch = 1; // Set the pitch (1 is normal pitch)
+            speech.rate = 0.8; // Set the speed (1 is normal speed)
+            speech.pitch = 1.5; // Set the pitch (1 is normal pitch)
             
             // Optional: Set a voice (if available)
             const voices = window.speechSynthesis.getVoices();
@@ -102,6 +102,8 @@ export default function Speech () {
     
 
     // CODE FOR TEXT TO SPEECH ENDS 
+
+
 
 
     // User Speech Feedback 
@@ -196,7 +198,10 @@ export default function Speech () {
 
                             <div className="mt-6 p-4 border rounded-md shadow bg-white w-2/3 text-center text-gray-700">
                                 <p className="text-xl whitespace-pre-wrap">{speechFeedback || 'You will get your feedback here'}</p>
+                                
                             </div>
+
+                            
                         </>
                     )}
 
