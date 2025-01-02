@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaBook, FaMicrophoneAlt, FaVolumeUp, FaClipboardCheck, FaChartBar } from 'react-icons/fa';
-import '/Users/admin/Desktop/Designathon/SoftSkill/softskill/src/css/Dashboardcss.css';
+import '../css/Dashboardcss.css';
 
 function Dashboard() {
   return (

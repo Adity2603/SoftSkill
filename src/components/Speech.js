@@ -73,6 +73,37 @@ export default function Speech () {
 
     // CODE FOR SPEECH TO TEXT ENDS 
 
+
+    // CODE FOR TEXT TO SPEECH
+
+    function textToSpeech(text) {
+        // Check if the browser supports speech synthesis
+        if ('speechSynthesis' in window) {
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text; // Set the text to speak
+            speech.lang = 'en-US'; // Set the language (default: English US)
+            speech.rate = 1; // Set the speed (1 is normal speed)
+            speech.pitch = 1; // Set the pitch (1 is normal pitch)
+            
+            // Optional: Set a voice (if available)
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                speech.voice = voices[0]; // Use the first available voice
+            }
+    
+            // Speak the text
+            window.speechSynthesis.speak(speech);
+        } else {
+            alert("Sorry, your browser does not support text-to-speech.");
+        }
+    }
+    
+    
+    
+
+    // CODE FOR TEXT TO SPEECH ENDS 
+
+
     // User Speech Feedback 
 
 
