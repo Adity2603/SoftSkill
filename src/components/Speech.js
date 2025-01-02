@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios';
 
-export default function Speech () {
+export default function Speech() {
 
     const [speechFeedback, setFeedback] = useState()
     const [activeButton, setActiveButton] = useState(null); // Tracks the active button
@@ -81,25 +81,33 @@ export default function Speech () {
         if ('speechSynthesis' in window) {
             const speech = new SpeechSynthesisUtterance();
             speech.text = text; // Set the text to speak
-            speech.lang = 'en-US'; // Set the language (default: English US)
+            speech.lang = 'en-IN'; // Set the language (default: English US)
             speech.rate = 0.8; // Set the speed (1 is normal speed)
             speech.pitch = 1.5; // Set the pitch (1 is normal pitch)
-            
+
             // Optional: Set a voice (if available)
             const voices = window.speechSynthesis.getVoices();
             if (voices.length > 0) {
                 speech.voice = voices[0]; // Use the first available voice
             }
-    
+
             // Speak the text
             window.speechSynthesis.speak(speech);
         } else {
             alert("Sorry, your browser does not support text-to-speech.");
         }
     }
-    
-    
-    
+
+    function stopSpeech() {
+        // if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+        //     window.speechSynthesis.cancel(); // Stop the current speech
+        // }
+
+        window.speechSynthesis.cancel();
+    }
+
+
+
 
     // CODE FOR TEXT TO SPEECH ENDS 
 
@@ -197,11 +205,25 @@ export default function Speech () {
                             </div>
 
                             <div className="mt-6 p-4 border rounded-md shadow bg-white w-2/3 text-center text-gray-700">
-                                <p className="text-xl whitespace-pre-wrap">{speechFeedback || 'You will get your feedback here'}</p>
-                                
+                                <p className="text-xl whitespace-pre-wrap">{(speechFeedback && textToSpeech(speechFeedback)) || 'You will get your feedback here'}</p>
+
                             </div>
 
-                            
+                            {speechFeedback !== '' && (
+                                <>
+
+                                    <button
+                                        onClick={stopSpeech}
+                                        
+                                        className={`px-6 py-2 m-4 rounded-md text-white font-semibold
+                                            }`} 
+                                    >
+                                        Stop Hearing
+                                    </button>
+
+                                </>)}
+
+
                         </>
                     )}
 
