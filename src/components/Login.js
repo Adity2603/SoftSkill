@@ -20,7 +20,7 @@ export default function Login() {
     const password = document.getElementById("password").value;
 
     // Basic Login Logic
-    if (email === "test@example.com" && password === "password123") {
+    if (email === "abc@email.com" && password === "123") {
       navigate("/dashboard");
     } else {
       alert("Invalid credentials! Please try again.");

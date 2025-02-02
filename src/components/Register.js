@@ -1,8 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Register() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // State for form inputs and error messages
   const [formData, setFormData] = useState({
@@ -49,12 +50,21 @@ export default function Register() {
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
 
     if (validateForm()) {
       // Logic for registration (e.g., API call) can go here
       console.log("Registration successful", formData);
-      navigate("/");
+      axios.post("http://localhost:3001/register" , {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      })
+      
+      .then((result) =>(console.log(result)))
+      .catch((err) =>(console.log(err)
+      ))
     }
   };
 

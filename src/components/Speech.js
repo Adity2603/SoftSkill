@@ -8,6 +8,9 @@ export default function Speech() {
     const [text, setText] = useState('');
     const [isListening, setIsListening] = useState(false);
     const [userTopic, setTopic] = useState('')
+    const [aiTopic , setAiTopic] = useState('')
+
+    
 
     const HandleTopic = (e) => {
 
@@ -81,14 +84,24 @@ export default function Speech() {
         if ('speechSynthesis' in window) {
             const speech = new SpeechSynthesisUtterance();
             speech.text = text; // Set the text to speak
-            speech.lang = 'en-IN'; // Set the language (default: English US)
-            speech.rate = 0.8; // Set the speed (1 is normal speed)
-            speech.pitch = 1.5; // Set the pitch (1 is normal pitch)
+            speech.lang = 'en-US'; // Set the language
+            speech.rate = 1; // Set the speed
+            speech.pitch = 1; // Set the pitch
 
-            // Optional: Set a voice (if available)
+            // Get all available voices
             const voices = window.speechSynthesis.getVoices();
-            if (voices.length > 0) {
-                speech.voice = voices[0]; // Use the first available voice
+
+            // Select a female voice if available
+            const femaleVoice = voices.find(
+                (voice) =>
+                    voice.name.includes('Female') ||
+                    voice.name.includes('Google UK English Female')
+            );
+
+            if (femaleVoice) {
+                speech.voice = femaleVoice; // Set the selected female voice
+            } else if (voices.length > 0) {
+                speech.voice = voices[0]; // Fallback to the first available voice
             }
 
             // Speak the text
@@ -105,6 +118,8 @@ export default function Speech() {
 
         window.speechSynthesis.cancel();
     }
+
+
 
 
 
@@ -135,7 +150,7 @@ export default function Speech() {
                             The Topic is ${userTopic}  
                             And his the content which user has spoke :
                             ${text} 
-                            keep your feedback bit short do not make too lone also not too short make so that user can improve in him`
+                            keep your feedback  short do not make too long  make sure  so that user can improve in him`
                         }]
                     }]
                 }
@@ -144,6 +159,7 @@ export default function Speech() {
 
 
             setFeedback(`${response.data.candidates[0].content.parts[0].text}`)
+
 
 
 
@@ -205,24 +221,35 @@ export default function Speech() {
                             </div>
 
                             <div className="mt-6 p-4 border rounded-md shadow bg-white w-2/3 text-center text-gray-700">
-                                <p className="text-xl whitespace-pre-wrap">{(speechFeedback && textToSpeech(speechFeedback)) || 'You will get your feedback here'}</p>
+                                <p className="text-xl whitespace-pre-wrap">{speechFeedback || 'You will get your feedback here'}</p>
+
+                                <button
+                                    className="px-6 py-2 mx-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600"
+                                    onClick={() => textToSpeech(speechFeedback)}
+                                >
+                                    Start Hearing
+                                </button>
+                                <button
+                                    className="px-6 py-2 mx-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600"
+                                    onClick={stopSpeech}
+                                >
+                                    Stop Hearing
+                                </button>
 
                             </div>
 
-                            {speechFeedback !== '' && (
-                                <>
+                        </>
+                    )}
 
-                                    <button
-                                        onClick={stopSpeech}
-                                        
-                                        className={`px-6 py-2 m-4 rounded-md text-white font-semibold
-                                            }`} 
-                                    >
-                                        Stop Hearing
-                                    </button>
 
-                                </>)}
+                    {/* LISTEN FROM AI FEATURE  */}
 
+                    {activeButton === 'button1' && (
+                        <>
+                        <div className="text-black text-3xl font-bold ">Give any Topic and Learn From AI</div>
+
+                        <input className="w-full m-4  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="WRITE YOUR TOPIC HERE " value={userTopic} onChange={HandleTopic}
+                            />
 
                         </>
                     )}
